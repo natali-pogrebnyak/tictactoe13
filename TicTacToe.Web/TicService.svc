@@ -1,0 +1,1 @@
+﻿<%@ServiceHost Language="C#" Debug="true" Factory="TicTacToe.Web.TicServiceFactoryHost" Service="TicTacToe.Web.TicService" %>

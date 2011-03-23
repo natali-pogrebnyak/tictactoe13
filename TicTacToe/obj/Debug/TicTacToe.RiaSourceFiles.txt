@@ -1,0 +1,1 @@
+C:\Documents and Settings\Amanuiel\Рабочий стол\TicTacToe\TicTacToe\TicTacToe.Web\TicTacToe.Web.csproj,634357853203437500,Properties\AssemblyInfo.cs,TicClient.cs,TicService.svc.cs,TicServiceFactoryHost.cs,
