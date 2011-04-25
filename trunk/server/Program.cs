@@ -20,6 +20,8 @@ namespace Server
             try
             {
                 ConfigLoad config = new ConfigLoad();
+                System.Console.WriteLine("Сервер \"" + config.vars["S_SERVER_NAME"] + "\" запущен!");
+                
             }
             catch (Exception ex)
             {
