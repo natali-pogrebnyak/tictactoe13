@@ -17,7 +17,20 @@ namespace Server
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("TEST");
+            try
+            {
+                ConfigLoad config = new ConfigLoad();
+            }
+            catch (Exception ex)
+            {
+                System.Console.WriteLine(ex.Message);
+            }
+            finally
+            {
+                System.Console.WriteLine("Для завершения работы нажмите любую клавишу!");
+                System.Console.ReadLine();
+            }
+            
         }
     }
 }
