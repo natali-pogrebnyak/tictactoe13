@@ -4,6 +4,8 @@ using System.Linq;
 using System.Text;
 using System.IO;
 
+using MySql.Data.MySqlClient;
+
 namespace Server
 {
     class ConfigLoad
@@ -12,15 +14,17 @@ namespace Server
         public string source;
         public string user;
         public string password;
+        public Dictionary<string, object> vars = new Dictionary<string, object>();
 
         public ConfigLoad()
         {
             string path = System.Reflection.Assembly.GetExecutingAssembly().Location; // путь до программы
             path = path.Substring(0, path.LastIndexOf("\\")); // срез имя файла
-            ReadConfig(string.Format(@"{0}\config", path));
+            readConfig(string.Format(@"{0}\config", path));
+            readVars();
         }
 
-        private void ReadConfig(string path)
+        private void readConfig(string path)
         {
             using (FileStream fs = new FileStream(path, FileMode.Open))
             {
@@ -48,6 +52,42 @@ namespace Server
                     }
                 }
             }
+        }
+
+        public string dataSourse
+        {
+            get
+            {
+                return string.Format(@"Database={0};Data Source={1};User Id={2};Password={3}", database, source, user, password); // строка коннекта
+            }
+        }
+
+        public void readVars()
+        {
+            string sql = "SELECT S_SYS_NAME, S_TYPE, S_VALUE FROM dat_vars";
+            MySqlConnection connection = new MySqlConnection(dataSourse);
+            MySqlCommand command = new MySqlCommand(sql, connection);
+            MySqlDataReader data_reader;
+            connection.Open();
+            data_reader = command.ExecuteReader();
+            while (data_reader.Read())
+            {
+                switch (data_reader.GetString(1).Trim().ToLower())
+                {
+                    case "string":
+                        vars[data_reader.GetString(0)] = data_reader.GetString(2);
+                        break;
+                    case "int":
+                        vars[data_reader.GetString(0)] = data_reader.GetInt32(2);
+                        break;
+                    default:
+                        vars[data_reader.GetString(0)] = data_reader.GetString(2);
+                        break;
+                }
+                
+            }
+            data_reader.Close();
+            connection.Close(); //Обязательно закрываем соединение!
         }
     }
 }
