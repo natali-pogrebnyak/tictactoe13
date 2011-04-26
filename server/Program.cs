@@ -19,9 +19,11 @@ namespace Server
         {
             try
             {
-                ConfigLoad config = new ConfigLoad();
-                System.Console.WriteLine("Сервер \"" + config.vars["S_SERVER_NAME"] + "\" запущен!");
-                
+                using (Server server = new Server())
+                {
+                    server.Start();
+                }
+            
             }
             catch (Exception ex)
             {
