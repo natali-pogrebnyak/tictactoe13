@@ -18,10 +18,12 @@ namespace Server
 
         public ConfigLoad()
         {
+            System.Console.Write("Конфигурация сервера");
             string path = System.Reflection.Assembly.GetExecutingAssembly().Location; // путь до программы
             path = path.Substring(0, path.LastIndexOf("\\")); // срез имя файла
             readConfig(string.Format(@"{0}\config", path));
             readVars();
+            System.Console.WriteLine(" ... OK");
         }
 
         private void readConfig(string path)
