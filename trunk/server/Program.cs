@@ -31,8 +31,7 @@ namespace Server
             }
             finally
             {
-                System.Console.WriteLine("Для завершения работы нажмите любую клавишу!");
-                System.Console.ReadLine();
+                System.Console.WriteLine("Произведено завершение работы сервера");
             }
             
         }
