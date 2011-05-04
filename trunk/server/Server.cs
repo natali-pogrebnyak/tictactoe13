@@ -10,10 +10,15 @@ namespace Server
     class Server : IDisposable
     {
         private ConfigLoad config;
+        private DataExchange data_exchange;
+        private Thread thread_command;
 
         public Server()
         {
             config = new ConfigLoad();
+            data_exchange = new DataExchange(this);
+            this.thread_command = new Thread(this.data_exchange.dataConector);
+            this.thread_command.Start();
         }
 
         public void Start()
@@ -65,6 +70,7 @@ namespace Server
 
         public void Dispose()
         {
+            thread_command.Abort();
         }
     }
 }
