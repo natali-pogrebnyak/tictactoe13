@@ -8,8 +8,8 @@ namespace Server
     class CommandHandler
     {
         private Server server;
-        private string str_command;
-        private bool c_trg = true;
+        private string console_command;
+        private DataXMLPackage client_command;
 
         public CommandHandler(Server ob_server)
         {
@@ -19,23 +19,24 @@ namespace Server
         public void ReadCommandConsole()
         {
             bool c_trg = true;
-            string str_command;
             System.Console.Write("->>");
             while (c_trg)
             {
-                str_command = System.Console.ReadLine().ToString().ToLower().Trim();
-                switch (str_command)
+                console_command = System.Console.ReadLine().ToString().ToLower().Trim();
+                switch (console_command)
                 {
                     case "/exit":
                         c_trg = false;
-                        System.Console.WriteLine("Команда " + str_command + " выполнена");
+                        server.Stop();
+                        System.Console.WriteLine("Команда " + console_command + " выполнена");
                         break;
                     case "/stop":
                         c_trg = false;
-                        System.Console.WriteLine("Команда " + str_command + " выполнена");
+                        server.Stop();
+                        System.Console.WriteLine("Команда " + console_command + " выполнена");
                         break;
                     case "/restart":
-                        System.Console.WriteLine("Команда " + str_command + " не реализована!");
+                        System.Console.WriteLine("Команда " + console_command + " не реализована!");
                         break;
                     case "/?":
                         System.Console.WriteLine("Список команд сервера:");
@@ -60,18 +61,20 @@ namespace Server
         public void ReadCommandClient()
         {
             bool c_trg = true;
-            string str_command = "";
             while (c_trg)
             {
-                switch (str_command)
+                if(server.queue_command.Count() > 0)
                 {
-                    case "/exit":
-                        System.Console.WriteLine("Команда " + str_command + " выполнена");
-                        break;
-                    default:
-                        break;
+                    client_command = server.queue_command.Dequeue();
+                    switch (client_command.s_data)
+                    {
+                        case "/test":
+                            System.Console.WriteLine("Команда " + client_command.s_data + " выполнена");
+                            break;
+                        default:
+                            break;
+                    }
                 }
-                System.Console.Write("->>");
             }
         }
     }
