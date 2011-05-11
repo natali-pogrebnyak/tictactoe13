@@ -7,7 +7,7 @@ using System.Xml.Serialization;
 namespace Server
 {
     [Serializable]
-    class DataXMLPackage
+    public class DataXMLPackage
     {
         /// <summary>
         /// идентификатор пользователя
