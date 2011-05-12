@@ -22,5 +22,10 @@ namespace Client
             field.MdiParent=this;
             field.Show();
         }
+
+        private void GameII_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            TicTacToe.ActiveForm.Close();
+        }
     }
 }
