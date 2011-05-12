@@ -30,20 +30,23 @@
         {
             this.SuspendLayout();
             // 
-            // Form2
+            // Field
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(600, 600);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.MaximumSize = new System.Drawing.Size(600, 600);
             this.MinimumSize = new System.Drawing.Size(600, 600);
-            this.Name = "Form2";
-            this.Text = "Form2";
+            this.Name = "Field";
+            this.Activated += new System.EventHandler(this.Field_Activated);
             this.ResumeLayout(false);
 
         }
 
         #endregion
+
+
+
+
+
     }
 }
