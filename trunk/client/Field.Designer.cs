@@ -32,6 +32,7 @@
             // 
             // Field
             // 
+            this.AutoScroll = true;
             this.ClientSize = new System.Drawing.Size(600, 600);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.MaximumSize = new System.Drawing.Size(600, 600);
@@ -43,6 +44,12 @@
         }
 
         #endregion
+
+
+
+
+
+
 
 
 
