@@ -18,7 +18,7 @@ namespace Client
         int circle = 2;
         bool f;
         int width = 30;
-        int height = 20;
+        int height = 30;
             
         public Field()
         {
@@ -27,76 +27,127 @@ namespace Client
 
         public bool win(object tag)
         {
+            //проверка по горизонтали
             int countheight = this.Height / height;
             int countwidth = this.Width / width;
             
-            int q = 0;
+            int win = 0;
             for (int i = 0; i < countheight; i++)
+            {
+                win = 0;
                 for (int j = 0; j < countwidth; j++)
-                    if (""+but[i * lim + j].Tag == ""+tag)
+                    if ("" + but[i * lim + j].Tag == "" + tag)
                     {
-                        q++;
-                        if (q == 5)
+                        win++;
+                        if (win == 5)
                             return true;
                     }
                     else
-                        q = 0;
+                        win = 0;
+            }
             
-            q = 0;
+            //проверка по вертикали
             for (int j = 0; j < countwidth; j++)
+            {
+                win = 0;
                 for (int i = 0; i < countheight; i++)
-                    if (""+but[i * lim + j].Tag == ""+tag)
+                    if ("" + but[i * lim + j].Tag == "" + tag)
                     {
-                        q++;
-                        if (q == 5)
+                        win++;
+                        if (win == 5)
                             return true;
                     }
                     else
-                        q = 0;
-            int w = 0;
-
-           /* while (ii - jj != countheight - 1)
-            {
-                w=
-                for (ii = 0; ii < countheight-jj; ii++)
-                {
-                    but[ii * lim + w].BackColor = System.Drawing.SystemColors.ActiveCaption;
-                    if ("" + but[ii * lim + w].Tag == "" + tag)
-                    {
-                        q++;
-                        if (q == 5)
-                            return true;
-                    }
-                    else
-                        q = 0;
-                    w++;
-                    
-                }
+                        win = 0;
             }
-            */
-           
-            for (int i = 0; i < countheight; i++)
-            {
-                w=0;
-                for (int j = countwidth-i; j < countwidth; j++)
-                {
-                    //MessageBox.Show("W");
-                    but[w * lim + j].BackColor = System.Drawing.SystemColors.ActiveCaption;
-                    if ("" + but[w * lim + i].Tag == "" + tag)
-                    {
-                        q++;
-                        if (q == 5)
-                            return true;
-                    }
-                    else
-                        q = 0;
-                    w++;
-                }
-            }
-
             
-            return false;
+            //проверка по главной диагонали
+            int ii = 0;
+            int jj = countwidth-1;
+            int count = 1;
+            int n = 0;
+            int curj = jj;
+            int curi = ii;
 
+            while (countwidth * countheight > n)
+            {
+                curj = jj;
+                win = 0;
+                for (int e = 0; e < count; e++)
+                {
+                    if ("" + but[ii * lim + jj].Tag == "" + tag)
+                    {
+                        win++;
+                        if (win == 5)
+                            return true;
+                    }
+                    else
+                        win = 0;
+                    ii++;
+                    jj++;
+                    n++;
+                }
+                jj = curj - 1;
+                if (curj == 0)
+                {
+                    jj = 0;
+                    curi++;
+                }
+                ii = curi;
+                if (countwidth>=countheight && curj==0)
+                    count--;
+                else
+                    if (countwidth < countheight && ii > countheight - countwidth && curj == 0)
+                        count--;
+                    else
+                        if (count < Math.Min(countheight, countwidth))
+                            count++;
+            }
+
+            //проверка по побочной диагонали
+            ii = 0;
+            jj = 0;
+            count = 1;
+            n = 0;
+            curj = jj;
+            curi = ii;
+
+            while (countwidth * countheight > n)
+            {
+                curj = jj;
+                win = 0;
+                for (int e = 0; e < count; e++)
+                {
+                    if ("" + but[ii * lim + jj].Tag == "" + tag)
+                    {
+                        win++;
+                        if (win == 5)
+                            return true;
+                    }
+                    else
+                        win = 0;
+                    ii++;
+                    jj--;
+                    n++;
+                }
+                jj = curj + 1;
+                if (curj == countwidth-1)
+                {
+                    jj = countwidth-1;
+                    curi++;
+                }
+                ii = curi;
+                if (countwidth >= countheight && curj == countwidth-1)
+                    count--;
+                else
+                    if (countwidth < countheight && ii > countheight - countwidth && curj == countwidth-1)
+                        count--;
+                    else
+                        if (count < Math.Min(countheight, countwidth))
+                            count++;
+            }
+
+            return false;
         }
         
         public void Field_Activated(object sender, EventArgs e)
@@ -131,9 +182,7 @@ namespace Client
             if ((int)((Button)sender).Tag == circle)
                 ((Button)sender).Image = Client.Properties.Resources.circle;
             else ((Button)sender).Image = Client.Properties.Resources.cross;
-
-            //but[y * lim + x] = ((Button)sender);
-
+            
             f=win(((Button)sender).Tag);
             if (f)
                 MessageBox.Show("Йа победил!!!");
