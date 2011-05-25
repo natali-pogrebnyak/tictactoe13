@@ -12,11 +12,13 @@ namespace Client
 {
     public partial class Field : Form
     {
-        Dictionary<int, Button> but = new Dictionary<int, Button>();
+        delegate int Deleg(int win, int i, int j, object tag);
+        static Deleg test;
+
+        static Dictionary<int, Button> but = new Dictionary<int, Button>();
         const int lim = 10000;
         int cross = 1;
         int circle = 2;
-        bool f;
         int width = 30;
         int height = 30;
             
@@ -25,7 +27,23 @@ namespace Client
             InitializeComponent();
         }
 
-        public bool win(object tag)
+        public static int winu(int wind, int i, int j, object tag)
+        {
+            if ("" + but[i * lim + j].Tag == "" + tag)
+            {
+                wind++;
+                if (wind == 5)
+                {
+                    MessageBox.Show("Йа победил!!!");
+                    return 1000;
+                }
+                return wind;
+            }
+            else
+                return 0;
+        }
+
+        public bool control(object tag)
         {
             //проверка по горизонтали
             int countheight = this.Height / height;
@@ -36,14 +54,7 @@ namespace Client
             {
                 win = 0;
                 for (int j = 0; j < countwidth; j++)
-                    if ("" + but[i * lim + j].Tag == "" + tag)
-                    {
-                        win++;
-                        if (win == 5)
-                            return true;
-                    }
-                    else
-                        win = 0;
+                    win = test(win, i, j, tag);
             }
             
             //проверка по вертикали
@@ -51,14 +62,7 @@ namespace Client
             {
                 win = 0;
                 for (int i = 0; i < countheight; i++)
-                    if ("" + but[i * lim + j].Tag == "" + tag)
-                    {
-                        win++;
-                        if (win == 5)
-                            return true;
-                    }
-                    else
-                        win = 0;
+                    win = test(win, i, j, tag);
             }
             
             //проверка по главной диагонали
@@ -75,14 +79,7 @@ namespace Client
                 win = 0;
                 for (int e = 0; e < count; e++)
                 {
-                    if ("" + but[ii * lim + jj].Tag == "" + tag)
-                    {
-                        win++;
-                        if (win == 5)
-                            return true;
-                    }
-                    else
-                        win = 0;
+                    win = test(win, ii, jj, tag);
                     ii++;
                     jj++;
                     n++;
@@ -118,14 +115,7 @@ namespace Client
                 win = 0;
                 for (int e = 0; e < count; e++)
                 {
-                    if ("" + but[ii * lim + jj].Tag == "" + tag)
-                    {
-                        win++;
-                        if (win == 5)
-                            return true;
-                    }
-                    else
-                        win = 0;
+                    win = test(win, ii, jj, tag);
                     ii++;
                     jj--;
                     n++;
@@ -182,10 +172,9 @@ namespace Client
             if ((int)((Button)sender).Tag == circle)
                 ((Button)sender).Image = Client.Properties.Resources.circle;
             else ((Button)sender).Image = Client.Properties.Resources.cross;
-            
-            f=win(((Button)sender).Tag);
-            if (f)
-                MessageBox.Show("Йа победил!!!");
+
+            Field.test = new Deleg(Field.winu);
+            control(((Button)sender).Tag);
         }
     }
 }
