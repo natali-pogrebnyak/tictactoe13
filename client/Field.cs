@@ -14,27 +14,28 @@ namespace Client
     {
         delegate int Deleg(int win, int i, int j, object tag);
         static Deleg test;
-
+        
         static Dictionary<int, Button> but = new Dictionary<int, Button>();
         const int lim = 10000;
-        int cross = 1;
-        int circle = 2;
         int width = 30;
         int height = 30;
-            
+
         public Field()
         {
             InitializeComponent();
         }
 
-        public static int winu(int wind, int i, int j, object tag)
+        public static int win_func(int wind, int i, int j, object tag)
         {
             if ("" + but[i * lim + j].Tag == "" + tag)
             {
                 wind++;
                 if (wind == 5)
                 {
-                    MessageBox.Show("Йа победил!!!");
+                    if ((int)tag==figure.circle)
+                        MessageBox.Show("Победили нолики!!!");
+                    else
+                        MessageBox.Show("Победили крестики!!!");
                     return 1000;
                 }
                 return wind;
@@ -154,7 +155,7 @@ namespace Client
                     but[i * lim + j].Size = new System.Drawing.Size(width, height);
                     but[i * lim + j].TabIndex = 0;
                     but[i * lim + j].UseVisualStyleBackColor = true;
-                    but[i * lim + j].FlatStyle = System.Windows.Forms.FlatStyle.Flat; 
+                    but[i * lim + j].FlatStyle = System.Windows.Forms.FlatStyle.Popup; 
                     this.Controls.Add(but[i * lim + j]);
                     but[i * lim + j].Click += new System.EventHandler(this.button_Click);
                 }
@@ -162,19 +163,24 @@ namespace Client
 
         private void button_Click(object sender, EventArgs e)
         {
-            int countheight = this.Height / height;
-            int countwidth = this.Width / width;
-            int x = ((Button)sender).Left / width;
-            int y = ((Button)sender).Top / height;
-            
-            ((Button)sender).Tag = circle;
+            if (((Button)sender).FlatStyle == System.Windows.Forms.FlatStyle.Popup)
+            {
+                ((Button)sender).FlatStyle = System.Windows.Forms.FlatStyle.Flat;
 
-            if ((int)((Button)sender).Tag == circle)
-                ((Button)sender).Image = Client.Properties.Resources.circle;
-            else ((Button)sender).Image = Client.Properties.Resources.cross;
+                int countheight = this.Height / height;
+                int countwidth = this.Width / width;
+                int x = ((Button)sender).Left / width;
+                int y = ((Button)sender).Top / height;
 
-            Field.test = new Deleg(Field.winu);
-            control(((Button)sender).Tag);
+                ((Button)sender).Tag = figure.id;
+
+                if ((int)((Button)sender).Tag == figure.circle)
+                    ((Button)sender).Image = Client.Properties.Resources.circle;
+                else ((Button)sender).Image = Client.Properties.Resources.cross;
+
+                Field.test = new Deleg(Field.win_func);
+                control(((Button)sender).Tag);
+            }
         }
     }
 }
