@@ -129,7 +129,6 @@
             this.Name = "GameII";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Игра с ИИ";
-            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.GameII_FormClosed);
             this.Menu.ResumeLayout(false);
             this.Menu.PerformLayout();
             this.ResumeLayout(false);

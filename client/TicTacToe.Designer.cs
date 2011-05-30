@@ -71,6 +71,7 @@
             this.authors.TabIndex = 3;
             this.authors.Text = "Авторы";
             this.authors.UseVisualStyleBackColor = true;
+            this.authors.Click += new System.EventHandler(this.authors_Click);
             // 
             // exit
             // 
@@ -80,6 +81,7 @@
             this.exit.TabIndex = 4;
             this.exit.Text = "Выход";
             this.exit.UseVisualStyleBackColor = true;
+            this.exit.Click += new System.EventHandler(this.exit_Click);
             // 
             // TicTacToe
             // 
