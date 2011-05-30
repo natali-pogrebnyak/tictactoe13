@@ -16,11 +16,6 @@ namespace Client
             InitializeComponent();
         }
 
-        private void GameII_FormClosed(object sender, FormClosedEventArgs e)
-        {
-            TicTacToe.ActiveForm.Close();
-        }
-
         private void button_circle_Click(object sender, EventArgs e)
         {
             figure.id = figure.circle;

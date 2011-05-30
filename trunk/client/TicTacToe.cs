@@ -18,9 +18,18 @@ namespace Client
 
         private void game_ii_Click(object sender, EventArgs e)
         {
-            TicTacToe.ActiveForm.Hide();
             GameII game = new GameII();
-            game.Show();
+            game.ShowDialog();
+        }
+
+        private void exit_Click(object sender, EventArgs e)
+        {
+            TicTacToe.ActiveForm.Close();
+        }
+
+        private void authors_Click(object sender, EventArgs e)
+        {
+            MessageBox.Show("Version 1.0.0\r\n\r\nАвторы:\r\nНовоселов Алексей Николаевич\r\nИльин Антон Александрович", "About");
         }
     }
 }
