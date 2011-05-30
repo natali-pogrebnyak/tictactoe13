@@ -14,12 +14,14 @@ namespace Client
     {
         delegate int Deleg(int win, int i, int j, object tag, int their,int q1,int q2);
         static Deleg test;
+        static int key;
         
+        static int countheight = 20;
+        static int countwidth = 20;
+
         static Dictionary<int, Button> but = new Dictionary<int, Button>();
         static List<int> lin = new List<int>();
         const int lim = 10000;
-        int width = 30;
-        int height = 30;
         
         public Field()
         {
@@ -45,30 +47,41 @@ namespace Client
                 return 0;
         }
 
-        public static void four_numb(int i, int j, int q1, int q2, int near, int far)
+        public static void four_numb(int i, int j, int q1, int q2, int one, int two, int three, int four)
         {
-            if (but[(i + q1) * lim + (j + q2)].Text == "")
-                but[(i + q1) * lim + (j + q2)].Text = "0";
-            but[(i + q1) * lim + (j + q2)].Text = (int.Parse(but[(i + q1) * lim + (j + q2)].Text) + near).ToString();
-            if (but[(i + q1 + q1) * lim + (j + q2 + q2)].Text == "")
-                but[(i + q1 + q1) * lim + (j + q2 + q2)].Text = "0";
-            but[(i + q1+q1) * lim + (j + q2 + q2)].Text = (int.Parse(but[(i + q1+q1) * lim + (j + q2 + q2)].Text) + far).ToString();
-            if (but[(i - q1) * lim + (j - q2)].Text == "")
-                but[(i - q1) * lim + (j - q2)].Text = "0";
-            but[(i - q1) * lim + (j - q2)].Text = (int.Parse(but[(i - q1) * lim + (j - q2)].Text) + near).ToString();
-            if (but[(i - q1 - q1) * lim + (j - q2 - q2)].Text == "")
-                but[(i - q1 -q1) * lim + (j - q2 - q2)].Text = "0";
-            but[(i - q1 -q1) * lim + (j - q2 - q2)].Text = (int.Parse(but[(i - q1 -q1) * lim + (j - q2 - q2)].Text) + far).ToString();
+            if (""+but[(i + q1) * lim + (j + q2)].Tag == "")
+            {
+                if (but[(i + q1) * lim + (j + q2)].Text == "")
+                    but[(i + q1) * lim + (j + q2)].Text = "0";
+                but[(i + q1) * lim + (j + q2)].Text = (int.Parse(but[(i + q1) * lim + (j + q2)].Text) + three).ToString();
+            }
+            if (""+but[(i + q1 + q1) * lim + (j + q2 + q2)].Tag == "")
+            {
+                if (but[(i + q1 + q1) * lim + (j + q2 + q2)].Text == "")
+                    but[(i + q1 + q1) * lim + (j + q2 + q2)].Text = "0";
+                but[(i + q1 + q1) * lim + (j + q2 + q2)].Text = (int.Parse(but[(i + q1 + q1) * lim + (j + q2 + q2)].Text) + four).ToString();
+            }
+            if (""+but[(i - q1) * lim + (j - q2)].Tag == "")
+            {
+                if (but[(i - q1) * lim + (j - q2)].Text == "")
+                    but[(i - q1) * lim + (j - q2)].Text = "0";
+                but[(i - q1) * lim + (j - q2)].Text = (int.Parse(but[(i - q1) * lim + (j - q2)].Text) + two).ToString();
+            }
+            if (""+but[(i - q1 - q1) * lim + (j - q2 - q2)].Tag == "")
+            {
+                if (but[(i - q1 - q1) * lim + (j - q2 - q2)].Text == "")
+                    but[(i - q1 - q1) * lim + (j - q2 - q2)].Text = "0";
+                but[(i - q1 - q1) * lim + (j - q2 - q2)].Text = (int.Parse(but[(i - q1 - q1) * lim + (j - q2 - q2)].Text) + one).ToString();
+            }
         }
 
         public static int line(int wind, int i, int j, object tag, int enemy,int q1,int q2)
         {
-            wind++;
-            if ("" + but[i * lim + j].Tag == "" + tag && wind == 1)
+            if ("" + but[i * lim + j].Tag == "" + tag)
             {
-                four_numb(i, j, q1, q2, 1, 1);
+                four_numb(i, j, q1, q2, 1, 1, 1, 1);
                 lin.Add((int)tag);
-                return wind;
+                return ++wind;
             }
 
             /*if ("" + but[i * lim + j].Tag == "" + enemy && wind == 2)
@@ -84,48 +97,40 @@ namespace Client
         public Button max()
         {
             Random rnd = new Random();
-            Dictionary<int, Button> but2 = new Dictionary<int,Button>();
-            int countheight = this.Height / height;
-            int countwidth = this.Width / width;
+
+            List<Button> list = new List<Button>();
+            List<int> keys = new List<int>();
+            int temp=0;
+            int fig = 0;
 
             for (int i = 0; i < countheight; i++)
                 for (int j = 0; j < countwidth; j++)
                 {
-                    but2[i * lim + j] = but[i * lim + j];
-                    //but[i * lim + j].Text = "";
-                }
-            
-            List<Button> list = new List<Button>();
-            int temp=0;
-            int fig = 0;
-
-            while (but2.Count != 0)
-            {
-                if (but2.First().Value.Text != "")
-                    if (int.Parse(but2.First().Value.Text) > temp)
-                    {
-                        list.Clear();
-                        temp = int.Parse(but2.First().Value.Text);
-                        list.Add(but2.First().Value);
-                    }
-                    else
-                        if (int.Parse(but2.First().Value.Text) == temp)
+                    if (but[i*lim+j].Text != "")
+                        if (int.Parse(but[i * lim + j].Text) > temp)
                         {
-                            temp = int.Parse(but2.First().Value.Text);
-                            list.Add(but2.First().Value);
+                            list.Clear();
+                            keys.Clear();
+                            temp = int.Parse(but[i * lim + j].Text);
+                            list.Add(but[i * lim + j]);
+                            keys.Add(i * lim + j);
                         }
-                but2.Remove(but2.First().Key);
-            }
+                        else
+                            if (int.Parse(but[i * lim + j].Text) == temp)
+                            {
+                                temp = int.Parse(but[i * lim + j].Text);
+                                list.Add(but[i * lim + j]);
+                                keys.Add(i * lim + j);
+                            }
+                }
             fig=rnd.Next(list.Count - 1);
+            key = keys[fig];
             return list[fig];
         }
 
         public bool control(object tag, int their)
         {
             //проверка по горизонтали
-            int countheight = this.Height / height;
-            int countwidth = this.Width / width;
-            
             int win = 0;
             for (int i = 0; i < countheight; i++)
             {
@@ -219,15 +224,15 @@ namespace Client
         
         public void Field_Activated(object sender, EventArgs e)
         {
-            int countheight = this.Height / height;
-            int countwidth = this.Width / width;
-
+            int width = this.Width / countwidth;
+            int height = this.Height / countwidth;
+            
             for (int i = 0; i < countheight; i++)
                 for (int j = 0; j < countwidth; j++)
                 {
                     but[i * lim + j] = new Button();
                     but[i * lim + j].Location = new System.Drawing.Point(j * width, i * height);
-                    but[i * lim + j].Name = "but" + i * lim + j;
+                    but[i * lim + j].Name = "but" + (i * lim) + j;
                     but[i * lim + j].Size = new System.Drawing.Size(width, height);
                     but[i * lim + j].TabIndex = 0;
                     but[i * lim + j].UseVisualStyleBackColor = true;
@@ -260,30 +265,36 @@ namespace Client
                 Field.test = new Deleg(Field.line);
                 control(((Button)sender).Tag, figure.id);
                 ii();
+                MessageBox.Show(key.ToString());
+                for (int i = 0; i < countheight; i++)
+                    for (int j = 0; j < countwidth; j++)
+                        but[i * lim + j].Text = "";
             }
         }
 
         public void ii()
         {
-            int countheight = this.Height / height;
-            int countwidth = this.Width / width;
-
-            Button sender = new Button();
-            sender=max();
-            sender.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             
-            sender.Tag = -figure.id;
-
-            if ((int)sender.Tag == figure.circle)
-                sender.Image = Client.Properties.Resources.circle;
-            else sender.Image = Client.Properties.Resources.cross;
-            
-            Field.test = new Deleg(Field.win_func);
-            control(sender.Tag, figure.id);
+            but[key] = max();
+            but[key].Text = "";
             /*for (int i = 0; i < countheight; i++)
                 for (int j = 0; j < countwidth; j++)
-                    but[i * lim + j].Text = "";*/
-                
+                    but[i * lim + j].Text = "";
+            */
+            but[key].FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+
+            but[key].Tag = -figure.id;
+            
+                       
+            if ((int)but[key].Tag == figure.circle)
+                but[key].Image = Client.Properties.Resources.circle;
+            else but[key].Image = Client.Properties.Resources.cross;
+            
+            Field.test = new Deleg(Field.win_func);
+            control(but[key].Tag, figure.id);
+
+            
+    
         }
     }
 }
