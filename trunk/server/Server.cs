@@ -33,15 +33,15 @@ namespace Server
             thread_command = new Thread(command_handler.ReadCommandClient);// поток для обработки комманд клиента
             thread_command.Start();
 
-            System.Console.WriteLine("Сервер \"" + config.vars["S_SERVER_NAME"] + "\" запущен!");
+            System.Console.WriteLine("Сервер запущен!"); //\"" + config.vars["S_SERVER_NAME"] + "\"
             command_handler.ReadCommandConsole();
         }
 
         public void Stop()
         {
+            data_exchange.Stop();
             thread_data.Abort();
             thread_command.Abort();
-            data_exchange.Stop();
         }
 
         public void Dispose()

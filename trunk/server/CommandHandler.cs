@@ -68,12 +68,22 @@ namespace Server
                     client_command = server.queue_command.Dequeue();
                     switch (client_command.s_data)
                     {
-                        case "/test":
-                            System.Console.WriteLine("Команда " + client_command.s_data + " выполнена");
+                        case "/test":// тест соеденения
+                            break;
+                        case "/login":// регистрация пользователя в системе
+                            break;
+                        case "/get_players":// запрос на всех играков в онлаине
+                            break;
+                        case "/set_player":// установка игрока противника
+                            break;
+                        case "/set_result":// установка результата
+                            break;
+                        case "/logout":// выход из системы
                             break;
                         default:
                             break;
                     }
+                    System.Console.WriteLine("Команда " + client_command.s_data + " выполнена");
                 }
             }
         }
