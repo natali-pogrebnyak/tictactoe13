@@ -38,5 +38,27 @@ namespace Client
             Menu.Enabled = false;
 
        }
+
+        private void listBox1_DrawItem(object sender, DrawItemEventArgs e)
+        {
+            ListBox lb=sender as ListBox;
+            e.DrawBackground();
+            e.DrawFocusRectangle();
+            if (e.Index < 0) return;
+            StringFormat frm = new StringFormat();
+            frm.Alignment = StringAlignment.Center;
+            frm.LineAlignment = StringAlignment.Center;
+            Brush brush=new SolidBrush(e.ForeColor);
+            string text=lb.GetItemText(lb.Items[e.Index]);
+            Rectangle rc=lb.GetItemRectangle(e.Index);
+            e.Graphics.DrawString(text, e.Font, brush, rc, frm);
+            frm.Dispose();
+            brush.Dispose();
+        }
+
+        private void GameII_Load(object sender, EventArgs e)
+        {
+            listBox1.Items.Add(param.win + " : " + param.los);
+        }
     }
 }

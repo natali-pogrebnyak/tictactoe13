@@ -35,6 +35,7 @@
             this.Choise = new System.Windows.Forms.Label();
             this.button_cross = new System.Windows.Forms.Button();
             this.button_circle = new System.Windows.Forms.Button();
+            this.listBox1 = new System.Windows.Forms.ListBox();
             this.Menu.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -117,11 +118,25 @@
             this.button_circle.UseVisualStyleBackColor = true;
             this.button_circle.Click += new System.EventHandler(this.button_circle_Click);
             // 
+            // listBox1
+            // 
+            this.listBox1.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed;
+            this.listBox1.Font = new System.Drawing.Font("Comic Sans MS", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.listBox1.FormattingEnabled = true;
+            this.listBox1.Items.AddRange(new object[] {
+            "Победы : Поражения"});
+            this.listBox1.Location = new System.Drawing.Point(603, 248);
+            this.listBox1.Name = "listBox1";
+            this.listBox1.Size = new System.Drawing.Size(189, 43);
+            this.listBox1.TabIndex = 3;
+            this.listBox1.DrawItem += new System.Windows.Forms.DrawItemEventHandler(this.listBox1_DrawItem);
+            // 
             // GameII
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(792, 606);
+            this.Controls.Add(this.listBox1);
             this.Controls.Add(this.Menu);
             this.IsMdiContainer = true;
             this.MaximumSize = new System.Drawing.Size(800, 640);
@@ -129,6 +144,7 @@
             this.Name = "GameII";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Игра с ИИ";
+            this.Load += new System.EventHandler(this.GameII_Load);
             this.Menu.ResumeLayout(false);
             this.Menu.PerformLayout();
             this.ResumeLayout(false);
@@ -145,5 +161,6 @@
         private System.Windows.Forms.Button Start;
         private System.Windows.Forms.Label Choise;
         private System.Windows.Forms.Label label_cross;
+        private System.Windows.Forms.ListBox listBox1;
     }
 }
