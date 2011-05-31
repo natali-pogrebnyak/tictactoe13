@@ -33,6 +33,7 @@ namespace Server
         {
             byte[] data_in;
             int recv = 0;
+            XmlSerializer xmlFormat = new XmlSerializer(typeof(DataXMLPackage));
 
             while (true)
             {
@@ -40,7 +41,7 @@ namespace Server
                 {
                     data_in = new byte[1024];
                     recv = mysocket.ReceiveFrom(data_in, ref Remote);
-                    XmlSerializer xmlFormat = new XmlSerializer(typeof(DataXMLPackage));
+                    
                     TextReader stringReader = new StringReader(Encoding.Default.GetString(data_in, 0, recv));
                     client_command = (DataXMLPackage)xmlFormat.Deserialize(stringReader);
                     client_command.d_date_r = String.Format("{0:dd.MM.yyyy HH:mm:ss}", DateTime.Now);
