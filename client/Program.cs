@@ -9,7 +9,18 @@ namespace Client
     {
         public static int id {get; set;}
         public const int circle = 1;
-        public const int cross = 2;
+        public const int cross = -1;
+        public const int empty = 0;
+    }
+
+    struct param
+    {
+        public static int countheight = 20;
+        public static int countwidth = 20;
+        public static int lim = 10000;
+        public static bool easy = true;
+        public static int win;
+        public static int los;
     }
 
     static class Program
