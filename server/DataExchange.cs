@@ -41,11 +41,12 @@ namespace Server
                 {
                     data_in = new byte[1024];
                     recv = mysocket.ReceiveFrom(data_in, ref Remote);
-                    
-                    TextReader stringReader = new StringReader(Encoding.Default.GetString(data_in, 0, recv));
-                    client_command = (DataXMLPackage)xmlFormat.Deserialize(stringReader);
-                    client_command.d_date_r = String.Format("{0:dd.MM.yyyy HH:mm:ss}", DateTime.Now);
-                    server.queue_command.Enqueue(client_command);
+                    using (TextReader stringReader = new StringReader(Encoding.Default.GetString(data_in, 0, recv)))
+                    {
+                        client_command = (DataXMLPackage)xmlFormat.Deserialize(stringReader);
+                        client_command.d_date_r = String.Format("{0:dd.MM.yyyy HH:mm:ss}", DateTime.Now);
+                        server.queue_command.Enqueue(client_command);
+                    }
                 }
                 catch (Exception ex)
                 {
